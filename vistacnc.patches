@@ -1,0 +1,26 @@
+--- my_LinuxCNC_machine.ini	2020-12-26 15:55:59.880025949 -0800
++++ HOLD/my_LinuxCNC_machine.ini	2020-12-23 21:21:47.276012278 -0800
+@@ -57,23 +57,10 @@
+ HALUI = halui
+ HALFILE = my_LinuxCNC_machine.hal
+ HALFILE = custom.hal
+-HALFILE = vc-p4s.hal
+ POSTGUI_HALFILE = postgui_call_list.hal
+-POSTGUI_HALFILE = vc_postgui.hal
+ SHUTDOWN = shutdown.hal
+ 
+ [HALUI]
+-MDI_COMMAND=...
+-MDI_COMMAND=...
+-MDI_COMMAND=...
+-MDI_COMMAND=...
+-MDI_COMMAND=...
+-MDI_COMMAND=G10 L20 P1 X0
+-MDI_COMMAND=G10 L20 P1 Y0
+-MDI_COMMAND=G10 L20 P1 Z0
+-MDI_COMMAND=G0 X0
+-MDI_COMMAND=G0 Y0
+-MDI_COMMAND=G0 Z0
+ 
+ [KINS]
+ JOINTS = 4
