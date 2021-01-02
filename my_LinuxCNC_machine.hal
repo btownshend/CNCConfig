@@ -89,7 +89,7 @@ net x-output     <= hm2_7i76e.0.stepgen.00.velocity-cmd
 net x-pos-fb     <= hm2_7i76e.0.stepgen.00.position-fb
 net x-pos-fb     => joint.0.motor-pos-fb
 net x-enable     <= joint.0.amp-enable-out
-# net x-enable     => hm2_7i76e.0.stepgen.00.enable
+net x-enable     => hm2_7i76e.0.stepgen.00.enable
 net x-enable  =>     hm2_7i76e.0.7i76.0.0.output-08
 
 
@@ -146,7 +146,7 @@ net y-output     <= hm2_7i76e.0.stepgen.01.velocity-cmd
 net y-pos-fb     <= hm2_7i76e.0.stepgen.01.position-fb
 net y-pos-fb     => joint.1.motor-pos-fb
 net y-enable     <= joint.1.amp-enable-out
-# net y-enable     => hm2_7i76e.0.stepgen.01.enable
+net y-enable     => hm2_7i76e.0.stepgen.01.enable
 net y-enable  =>     hm2_7i76e.0.7i76.0.0.output-10
 
 
@@ -200,7 +200,7 @@ net z-output     <= hm2_7i76e.0.stepgen.02.velocity-cmd
 net z-pos-fb     <= hm2_7i76e.0.stepgen.02.position-fb
 net z-pos-fb     => joint.2.motor-pos-fb
 net z-enable     <= joint.2.amp-enable-out
-# net z-enable     => hm2_7i76e.0.stepgen.02.enable
+net z-enable     => hm2_7i76e.0.stepgen.02.enable
 net z-enable  =>     hm2_7i76e.0.7i76.0.0.output-12
 
 
