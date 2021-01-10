@@ -109,9 +109,9 @@ net spindle.start  vc-p4s.spindle.start  => halui.spindle.0.start
 net spindle.stop  vc-p4s.spindle.stop  => halui.spindle.0.stop
 
 # 13---E-STOP
-net estop vc-p4s.estop.activate => halui.estop.activate
-net reset vc-p4s.estop.reset => halui.estop.reset
-net estop-is-activated halui.estop.is-activated => vc-p4s.estop.is-activated
+#net estop vc-p4s.estop.activate => halui.estop.activate
+#net reset vc-p4s.estop.reset => halui.estop.reset
+#net estop-is-activated halui.estop.is-activated => vc-p4s.estop.is-activated
 
 # 14---MACHINE
 net machine-on  vc-p4s.machine.on  => halui.machine.on
