@@ -9,7 +9,6 @@ loadrt hostmot2
 loadrt hm2_eth board_ip="192.168.1.121" config=" num_encoders=0 num_pwmgens=0 num_stepgens=5 sserial_port_0=0xxxxx" 
 setp    hm2_7i76e.0.watchdog.timeout_ns 5000000
 loadrt pid names=pid.x,pid.y,pid.z,pid.a,pid.c,pid.s
-
 addf hm2_7i76e.0.read          servo-thread
 addf motion-command-handler   servo-thread
 addf motion-controller        servo-thread
@@ -23,6 +22,17 @@ addf hm2_7i76e.0.write         servo-thread
 setp hm2_7i76e.0.dpll.01.timer-us -50
 setp hm2_7i76e.0.stepgen.timer-number 1
 
+#************************
+# EStop config
+#*************************
+loadrt estop_latch
+addf estop-latch.0 servo-thread 
+net estop_latch estop-latch.0.fault-in  hm2_7i76e.0.7i76.0.0.input-15-not
+net ok-out   estop-latch.0.ok-out hm2_7i76e.0.7i76.0.0.output-00
+net ok-out iocontrol.0.emc-enable-in
+net request-enable iocontrol.0.user-request-enable estop-latch.0.reset 
+
+
 # external output signals
 # Outputs to DYN4
 net X_Reset => hm2_7i76e.0.7i76.0.0.output-09
@@ -32,17 +42,17 @@ net Z_Reset => hm2_7i76e.0.7i76.0.0.output-13
 # external input signals
 
 # Inputs from DYN4 drives
-net X_Alarm     <=  hm2_7i76e.0.7i76.0.0.input-00
-net X_SRdy     <=  hm2_7i76e.0.7i76.0.0.input-01
-net X_OnPos     <=  hm2_7i76e.0.7i76.0.0.input-02
+net X_Alarm     <=  hm2_7i76e.0.7i76.0.0.input-00-not
+net X_SRdy     <=  hm2_7i76e.0.7i76.0.0.input-01-not
+net X_OnPos     <=  hm2_7i76e.0.7i76.0.0.input-02-not
 
-net Y_Alarm     <=  hm2_7i76e.0.7i76.0.0.input-03
-net Y_SRdy     <=  hm2_7i76e.0.7i76.0.0.input-04
-net Y_OnPos     <=  hm2_7i76e.0.7i76.0.0.input-05
+net Y_Alarm     <=  hm2_7i76e.0.7i76.0.0.input-03-not
+net Y_SRdy     <=  hm2_7i76e.0.7i76.0.0.input-04-not
+net Y_OnPos     <=  hm2_7i76e.0.7i76.0.0.input-05-not
 
-net Z_Alarm     <=  hm2_7i76e.0.7i76.0.0.input-06
-net Z_SRdy     <=  hm2_7i76e.0.7i76.0.0.input-07
-net Z_OnPos     <=  hm2_7i76e.0.7i76.0.0.input-08
+net Z_Alarm     <=  hm2_7i76e.0.7i76.0.0.input-06-not
+net Z_SRdy     <=  hm2_7i76e.0.7i76.0.0.input-07-not
+net Z_OnPos     <=  hm2_7i76e.0.7i76.0.0.input-08-not
 
 #*******************
 #  AXIS X JOINT 0
@@ -374,11 +384,6 @@ net probe-in     =>  motion.probe-input
 net machine-is-enabled        <=  motion.motion-enabled
 
 #  ---digital in / out signals---
-
-#  ---estop signals---
-
-net estop-out     <=  iocontrol.0.user-enable-out
-net estop-out     =>  iocontrol.0.emc-enable-in
 
 #  ---manual tool change signals---
 
