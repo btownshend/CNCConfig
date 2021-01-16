@@ -104,9 +104,7 @@ net x-enable  =>     hm2_7i76e.0.7i76.0.0.output-08
 
 
 # ---setup home / limit switch signals---
-
-#net x-home-sw     =>  joint.0.home-sw-in
-net x-pos-limit     =>  joint.0.home-sw-in
+net x-neg-limit     =>  joint.0.home-sw-in
 net x-neg-limit     =>  joint.0.neg-lim-sw-in
 net x-pos-limit     =>  joint.0.pos-lim-sw-in
 net x-neg-limit <= hm2_7i76e.0.7i76.0.0.input-16-not
@@ -162,12 +160,11 @@ net y-enable  =>     hm2_7i76e.0.7i76.0.0.output-10
 
 # ---setup home / limit switch signals---
 
-#net y-home-sw     =>  joint.1.home-sw-in
-net y-neg-limit     =>  joint.1.home-sw-in
+net y-pos-limit     =>  joint.1.home-sw-in
 net y-neg-limit     =>  joint.1.neg-lim-sw-in
 net y-pos-limit     =>  joint.1.pos-lim-sw-in
-net y-neg-limit <= hm2_7i76e.0.7i76.0.0.input-18-not
-net y-pos-limit <= hm2_7i76e.0.7i76.0.0.input-19-not
+net y-neg-limit <= hm2_7i76e.0.7i76.0.0.input-19-not
+net y-pos-limit <= hm2_7i76e.0.7i76.0.0.input-18-not
 
 #*******************
 #  AXIS Z JOINT 2
@@ -218,12 +215,11 @@ net z-enable     => hm2_7i76e.0.stepgen.02.enable
 net z-enable  =>     hm2_7i76e.0.7i76.0.0.output-12
 
 # ---setup home / limit switch signals---
-#net z-home-sw     =>  joint.2.home-sw-in
-net z-neg-limit     =>  joint.2.home-sw-in
+net z-pos-limit     =>  joint.2.home-sw-in
 net z-neg-limit     =>  joint.2.neg-lim-sw-in
 net z-pos-limit     =>  joint.2.pos-lim-sw-in
-net z-neg-limit <= hm2_7i76e.0.7i76.0.0.input-21-not
-net z-pos-limit <= hm2_7i76e.0.7i76.0.0.input-20-not
+net z-neg-limit <= hm2_7i76e.0.7i76.0.0.input-20-not
+net z-pos-limit <= hm2_7i76e.0.7i76.0.0.input-21-not
 
 #*******************
 #  AXIS A JOINT 3
