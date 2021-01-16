@@ -5,16 +5,14 @@ loadrt [EMCMOT]EMCMOT servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[KINS]JO
 loadrt hostmot2
 loadrt hm2_eth board_ip="192.168.1.121" config=" num_encoders=0 num_pwmgens=0 num_stepgens=5 sserial_port_0=0xxxxx" 
 setp    hm2_7i76e.0.watchdog.timeout_ns 5000000
-loadrt pid names=pid.x,pid.y,pid.z,pid.a,pid.c,pid.s
+loadrt pid names=pid.y,pid.z,pid.a,pid.c
 addf hm2_7i76e.0.read          servo-thread
-addf motion-command-handler   servo-thread
-addf motion-controller        servo-thread
-addf pid.x.do-pid-calcs       servo-thread
-addf pid.y.do-pid-calcs       servo-thread
-addf pid.z.do-pid-calcs       servo-thread
-addf pid.a.do-pid-calcs       servo-thread
-addf pid.c.do-pid-calcs       servo-thread
-addf pid.s.do-pid-calcs       servo-thread
+addf motion-command-handler    servo-thread
+addf motion-controller         servo-thread
+addf pid.y.do-pid-calcs        servo-thread
+addf pid.z.do-pid-calcs        servo-thread
+addf pid.a.do-pid-calcs        servo-thread
+addf pid.c.do-pid-calcs        servo-thread
 addf hm2_7i76e.0.write         servo-thread
 setp hm2_7i76e.0.dpll.01.timer-us -50
 setp hm2_7i76e.0.stepgen.timer-number 1
@@ -55,27 +53,6 @@ net z-onpos                      <=  hm2_7i76e.0.7i76.0.0.input-08-not
 #  AXIS X JOINT 0
 #*******************
 
-setp   pid.x.Pgain     [JOINT_0]P
-setp   pid.x.Igain     [JOINT_0]I
-setp   pid.x.Dgain     [JOINT_0]D
-setp   pid.x.bias      [JOINT_0]BIAS
-setp   pid.x.FF0       [JOINT_0]FF0
-setp   pid.x.FF1       [JOINT_0]FF1
-setp   pid.x.FF2       [JOINT_0]FF2
-setp   pid.x.deadband  [JOINT_0]DEADBAND
-setp   pid.x.maxoutput [JOINT_0]MAX_OUTPUT
-setp   pid.x.error-previous-target true
-# This setting is to limit bogus stepgen
-# velocity corrections caused by position
-# feedback sample time jitter.
-setp   pid.x.maxerror 0.000500
-
-net x-index-enable  <=> pid.x.index-enable
-net x-enable        =>  pid.x.enable
-net x-pos-cmd       =>  pid.x.command
-net x-pos-fb        =>  pid.x.feedback
-net x-output        <=  pid.x.output
-
 # Step Gen signals/setup
 
 setp   hm2_7i76e.0.stepgen.00.dirsetup        [JOINT_0]DIRSETUP
@@ -83,16 +60,13 @@ setp   hm2_7i76e.0.stepgen.00.dirhold         [JOINT_0]DIRHOLD
 setp   hm2_7i76e.0.stepgen.00.steplen         [JOINT_0]STEPLEN
 setp   hm2_7i76e.0.stepgen.00.stepspace       [JOINT_0]STEPSPACE
 setp   hm2_7i76e.0.stepgen.00.position-scale  [JOINT_0]STEP_SCALE
-setp   hm2_7i76e.0.stepgen.00.control-type     1
-setp   hm2_7i76e.0.stepgen.00.maxaccel         [JOINT_0]STEPGEN_MAXACCEL
-setp   hm2_7i76e.0.stepgen.00.maxvel           [JOINT_0]STEPGEN_MAXVEL
-
-# ---closedloop stepper signals---
 setp   hm2_7i76e.0.stepgen.00.step_type        0   # 0=DIR/STEP
+setp   hm2_7i76e.0.stepgen.00.maxaccel         0   # 0=No limit 
+setp   hm2_7i76e.0.stepgen.00.maxvel           0   # 0=No limit
 
+# ---open loop stepper signals---
 net x-pos-cmd    <= joint.0.motor-pos-cmd
-net x-vel-cmd    <= joint.0.vel-cmd
-net x-output     <= hm2_7i76e.0.stepgen.00.velocity-cmd
+net x-pos-cmd	 => hm2_7i76e.0.stepgen.00.position-cmd
 
 net x-pos-fb     <= hm2_7i76e.0.stepgen.00.position-fb
 net x-pos-fb     => joint.0.motor-pos-fb
