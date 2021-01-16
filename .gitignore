@@ -1,7 +1,9 @@
-
 autosave.halscope
 linuxcnc.var.bak
 my_LinuxCNC_machine.hal~
 vc-p4s.hal~
 xyza_working/my_LinuxCNC_machine.hal
 xyza_working/my_LinuxCNC_machine.ini
+.#*
+#*#
+
