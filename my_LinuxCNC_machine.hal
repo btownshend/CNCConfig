@@ -3,7 +3,7 @@
 loadrt [KINS]KINEMATICS
 loadrt [EMCMOT]EMCMOT servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[KINS]JOINTS
 loadrt hostmot2
-loadrt hm2_eth board_ip="192.168.1.121" config=" num_encoders=0 num_pwmgens=0 num_stepgens=5 sserial_port_0=0xxxxx" 
+loadrt hm2_eth board_ip="192.168.1.121" config=" num_encoders=1 num_pwmgens=0 num_stepgens=5 sserial_port_0=0xxxxx" 
 setp    hm2_7i76e.0.watchdog.timeout_ns 5000000
 addf hm2_7i76e.0.read          servo-thread
 addf motion-command-handler    servo-thread
@@ -270,9 +270,14 @@ net spindle-enable             <=  spindle.0.on
 net spindle-cw                 <=  spindle.0.forward
 net spindle-ccw                <=  spindle.0.reverse
 net spindle-output <= spindle.0.speed-out-abs
+net spindle-vel-fb-rpm         <= hm2_7i76e.0.encoder.00.velocity-rpm
 
 # ---digital potentionmeter output signals/setup---
 
 setp   hm2_7i76e.0.7i76.0.0.spinout-minlim    200
 setp   hm2_7i76e.0.7i76.0.0.spinout-maxlim    3000
 setp   hm2_7i76e.0.7i76.0.0.spinout-scalemax  3000
+
+# Set spindle encoder to counter mode
+setp   hm2_7i76e.0.encoder.00.counter-mode true
+setp   hm2_7i76e.0.encoder.00.scale 4  # 4 pulses/revolution
