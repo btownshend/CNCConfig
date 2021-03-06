@@ -1,0 +1,2 @@
+net spindle-vel-cmd-rpm => pyvcp.spindle-vel-cmd-rpm
+net spindle-vel-fb-rpm => pyvcp.spindle-vel-fb-rpm

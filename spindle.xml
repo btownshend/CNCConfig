@@ -1,0 +1,16 @@
+<pyvcp>
+    <label>
+        <text>"Spindle speed req:"</text>
+    </label>
+    <bar>
+        <halpin>"spindle-vel-cmd-rpm"</halpin>
+        <max_>5000</max_>
+    </bar>
+    <label>
+        <text>"Spindle speed (tach):"</text>
+    </label>
+    <bar>
+        <halpin>"spindle-vel-fb-rpm"</halpin>
+        <max_>5000</max_>
+    </bar>
+</pyvcp>
