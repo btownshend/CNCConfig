@@ -11,6 +11,9 @@ addf motion-controller         servo-thread
 addf hm2_7i76e.0.write         servo-thread
 setp hm2_7i76e.0.dpll.01.timer-us -50
 setp hm2_7i76e.0.stepgen.timer-number 1
+# Spindle PID setup
+loadrt pid names=pid.s
+addf pid.s.do-pid-calcs       servo-thread
 
 #************************
 # EStop config
@@ -261,6 +264,28 @@ net tool-change-confirmed   iocontrol.0.tool-changed      <=  hal_manualtoolchan
 net tool-number             iocontrol.0.tool-prep-number  =>  hal_manualtoolchange.number
 net tool-prepare-loopback   iocontrol.0.tool-prepare      =>  iocontrol.0.tool-prepared
 
+#*******************
+#  SPINDLE
+#*******************
+
+# PID control of speed
+# input and output are both in RPM (not volts)
+setp   pid.s.Pgain     [SPINDLE_0]P
+setp   pid.s.Igain     [SPINDLE_0]I
+setp   pid.s.Dgain     [SPINDLE_0]D
+setp   pid.s.bias      [SPINDLE_0]BIAS
+setp   pid.s.FF0       [SPINDLE_0]FF0
+setp   pid.s.FF1       [SPINDLE_0]FF1
+setp   pid.s.FF2       [SPINDLE_0]FF2
+setp   pid.s.deadband  [SPINDLE_0]DEADBAND
+setp   pid.s.error-previous-target true
+
+net spindle-index-enable  <=> pid.s.index-enable
+net spindle-enable        =>  pid.s.enable
+net spindle-vel-cmd-rpm     => pid.s.command
+net spindle-vel-fb-rpm      => pid.s.feedback
+net spindle-output  pid.s.output
+
 # Spindle control
 net spindle-output      => hm2_7i76e.0.7i76.0.0.spinout
 net spindle-enable      => hm2_7i76e.0.7i76.0.0.spinena
@@ -269,15 +294,15 @@ net spindle-ccw         => hm2_7i76e.0.7i76.0.0.spindir
 net spindle-enable             <=  spindle.0.on
 net spindle-cw                 <=  spindle.0.forward
 net spindle-ccw                <=  spindle.0.reverse
-net spindle-output <= spindle.0.speed-out-abs
+net spindle-vel-cmd-rpm  <= spindle.0.speed-out-abs
 net spindle-vel-fb-rpm         <= hm2_7i76e.0.encoder.00.velocity-rpm
 
 # ---digital potentionmeter output signals/setup---
-
+# This maps RPM directly to the the output range
 setp   hm2_7i76e.0.7i76.0.0.spinout-minlim    200
 setp   hm2_7i76e.0.7i76.0.0.spinout-maxlim    3000
 setp   hm2_7i76e.0.7i76.0.0.spinout-scalemax  3000
 
 # Set spindle encoder to counter mode
 setp   hm2_7i76e.0.encoder.00.counter-mode true
-setp   hm2_7i76e.0.encoder.00.scale 4  # 4 pulses/revolution
+setp   hm2_7i76e.0.encoder.00.scale -4  # 4 pulses/revolution (invert to make pos)
