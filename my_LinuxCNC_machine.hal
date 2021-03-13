@@ -18,7 +18,7 @@ addf pid.s.do-pid-calcs       servo-thread
 #************************
 # Clearpath-SC interface via python
 #*************************
-loadusr -W /home/bst/linuxcnc/clearpath/getstatus/clearpath
+loadusr -W /home/bst/linuxcnc/configs/my_LinuxCNC_machine/clearpath/clearpath
 
 #************************
 # EStop config
