@@ -5,3 +5,4 @@ xyza_working/my_LinuxCNC_machine.hal
 xyza_working/my_LinuxCNC_machine.ini
 .#*
 #*#
+linuxcnc.var
