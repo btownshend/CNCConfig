@@ -13,6 +13,9 @@
         <halpin>"spindle-vel-fb-rpm"</halpin>
         <max_>5000</max_>
     </bar>
+    <label>
+        <text>"Spindle at speed:"</text>
+    </label>
     <led>
      <halpin>"spindle-at-speed"</halpin> 
      <size>50</size> 
