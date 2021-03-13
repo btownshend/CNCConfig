@@ -13,4 +13,10 @@
         <halpin>"spindle-vel-fb-rpm"</halpin>
         <max_>5000</max_>
     </bar>
+    <led>
+     <halpin>"spindle-at-speed"</halpin> 
+     <size>50</size> 
+     <on_color>"green"</on_color>
+     <off_color>"red"</off_color>
+     </led>
 </pyvcp>

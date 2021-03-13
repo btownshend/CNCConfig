@@ -297,6 +297,24 @@ net spindle-ccw                <=  spindle.0.reverse
 net spindle-vel-cmd-rpm  <= spindle.0.speed-out-abs
 net spindle-vel-fb-rpm         <= hm2_7i76e.0.encoder.00.velocity-rpm
 
+net spindle-at-speed           =>  spindle.0.at-speed
+# sets spindle-at-speed true
+# load a near component and attach it to a thread
+loadrt near
+addf near.0 servo-thread
+
+# connect one input to the commanded spindle speed
+net spindle-vel-cmd-rpm => near.0.in1
+
+# connect one input to the encoder-measured spindle speed
+net spindle-vel-fb-rpm => near.0.in2
+
+# connect the output to the spindle-at-speed input
+net spindle-at-speed spindle.0.at-speed <= near.0.out
+
+# set the spindle speed inputs to agree if within 5%
+setp near.0.scale 1.05
+
 # ---digital potentionmeter output signals/setup---
 # This maps RPM directly to the the output range
 setp   hm2_7i76e.0.7i76.0.0.spinout-minlim    200
