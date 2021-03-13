@@ -279,6 +279,9 @@ setp   pid.s.FF1       [SPINDLE_0]FF1
 setp   pid.s.FF2       [SPINDLE_0]FF2
 setp   pid.s.deadband  [SPINDLE_0]DEADBAND
 setp   pid.s.error-previous-target true
+# Avoid spindle windup
+setp pid.s.maxoutput 3000   # Should be same as max for digital pot
+#setp pid.s.maxerrorI 500  # shouldn't need if maxoutput is set
 
 net spindle-index-enable  <=> pid.s.index-enable
 net spindle-enable        =>  pid.s.enable
