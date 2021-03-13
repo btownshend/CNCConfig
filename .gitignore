@@ -6,3 +6,9 @@ xyza_working/my_LinuxCNC_machine.ini
 .#*
 #*#
 linuxcnc.var
+clearpath/getstatus
+clearpath/getstatus.d
+clearpath/getstatus.o
+*.so
+linuxcnc.var
+clearpath/report.txt

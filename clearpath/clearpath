@@ -1,0 +1,52 @@
+#!/usr/bin/env python
+import ctypes
+import hal, time
+import sys,os
+
+print('sys.argv[0] =', sys.argv[0])             
+pathname = os.path.dirname(sys.argv[0])        
+print('path =', pathname)
+lib=ctypes.CDLL(pathname+"/getstatus.so")
+print('getstatus.so loaded')
+
+h=hal.component("clearpath")
+h.newpin("0.fault",hal.HAL_BIT,hal.HAL_OUT)
+h.newpin("1.fault",hal.HAL_BIT,hal.HAL_OUT)
+h.newpin("0.enable",hal.HAL_BIT,hal.HAL_IN)
+h.newpin("1.enable",hal.HAL_BIT,hal.HAL_IN)
+print('components/pins created')
+
+try:
+    if lib.initialize() < 0:
+        print("Unable to initialize ClearPath SC-HUB connection")
+        raise SystemExit
+    print("initialized")
+    print(dir(h))
+    h.ready()
+    print("ready")
+    
+    while True:
+        time.sleep(1)
+        print("update")
+        if lib.setenable(0,h['0.enable']) < 0:
+            print("clearpath: failed to setenable for port 0")
+            h['0.fault']=1
+            continue
+        if lib.setenable(1,h['1.enable']) < 0:
+            print("clearpath: failed to setenable for port 1")
+            h['1.fault']=1
+            continue
+
+        s0=lib.getstatus(0)
+        if s0<0:
+            print("clearpath: getstatus(0) failed")
+        h['0.fault']=(s0!=0)
+        s1=lib.getstatus(1)
+        if s1<0:
+            print("clearpath: getstatus(1) failed")
+        h['1.fault']=(s1!=0)
+except KeyboardInterrupt:
+    lib.shutdown()
+    raise SystemExit
+
+    
