@@ -295,7 +295,7 @@ net spindle-output  pid.s.output
 # Spindle control
 net spindle-output      => hm2_7i76e.0.7i76.0.0.spinout
 net spindle-enable      => hm2_7i76e.0.7i76.0.0.spinena
-net spindle-ccw         => hm2_7i76e.0.7i76.0.0.spindir
+net spindle-cw         => hm2_7i76e.0.7i76.0.0.spindir
 # connect to internal signals
 net spindle-enable             <=  spindle.0.on
 net spindle-cw                 <=  spindle.0.forward
