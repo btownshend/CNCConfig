@@ -11,4 +11,4 @@ getstatus.o: getstatus.cpp
 	g++ -I"$(SDK)/inc/inc-pub" -fPIC -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"getstatus.d" -MT"getstatus.o" getstatus.cpp
 
 clean:
-	rm *.o *.so getstatus
+	rm *.d *.o *.so getstatus
