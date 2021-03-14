@@ -1,0 +1,9 @@
+#!/bin/bash
+ndev=$(ls -l /dev/ttyXR* | wc -l)
+if [[ $ndev = 0 ]]
+then
+   echo Need to install kernel driver
+   exit 
+fi
+export LD_LIBRARY_PATH=/home/bst/linuxcnc/clearpath/SDK/sFoundation/Debug
+/usr/bin/linuxcnc '/home/bst/linuxcnc/configs/my_LinuxCNC_machine/my_LinuxCNC_machine.ini'
