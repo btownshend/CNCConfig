@@ -283,7 +283,7 @@ setp   pid.s.FF2       [SPINDLE_0]FF2
 setp   pid.s.deadband  [SPINDLE_0]DEADBAND
 setp   pid.s.error-previous-target true
 # Avoid spindle windup
-setp pid.s.maxoutput 3000   # Should be same as max for digital pot
+setp pid.s.maxoutput 1800   # Should be same as max for digital pot
 #setp pid.s.maxerrorI 500  # shouldn't need if maxoutput is set
 
 net spindle-index-enable  <=> pid.s.index-enable
@@ -324,8 +324,8 @@ setp near.0.scale 1.05
 # ---digital potentionmeter output signals/setup---
 # This maps RPM directly to the the output range
 setp   hm2_7i76e.0.7i76.0.0.spinout-minlim    200
-setp   hm2_7i76e.0.7i76.0.0.spinout-maxlim    3000
-setp   hm2_7i76e.0.7i76.0.0.spinout-scalemax  3000
+setp   hm2_7i76e.0.7i76.0.0.spinout-maxlim    1800
+setp   hm2_7i76e.0.7i76.0.0.spinout-scalemax  1800
 
 # Set spindle encoder to counter mode
 setp   hm2_7i76e.0.encoder.00.counter-mode true
