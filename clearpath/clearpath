@@ -26,8 +26,8 @@ try:
     print("ready")
     
     while True:
-        time.sleep(1)
-        print("update")
+        time.sleep(0.25)
+        #print("update")
         if lib.setenable(0,h['0.enable']) < 0:
             print("clearpath: failed to setenable for port 0")
             h['0.fault']=1
